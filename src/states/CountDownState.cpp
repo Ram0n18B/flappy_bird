@@ -21,16 +21,16 @@ CountDownState::CountDownState(StateMachine* sm) noexcept
 
 void CountDownState::enter(std::shared_ptr<World> _world, std::shared_ptr<Bird> _bird) noexcept
 {
-    if (world == nullptr)
-    {
-        world = std::make_shared<World>(false);
-    }
-    else
-    {
-        world->reset(false);
-    }
-
+    world = _world;
+    world->reset(false);
+    
     bird = _bird;
+    bird->reset(Settings::VIRTUAL_WIDTH / 2 - Settings::BIRD_WIDTH / 2, Settings::VIRTUAL_HEIGHT / 2 - Settings::BIRD_HEIGHT / 2);
+}
+
+void CountDownState::exit() noexcept
+{
+    world->reset(true);
 }
 
 void CountDownState::update(float dt) noexcept

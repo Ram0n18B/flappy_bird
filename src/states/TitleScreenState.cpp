@@ -14,7 +14,10 @@
 #include <src/states/TitleScreenState.hpp>
 
 TitleScreenState::TitleScreenState(StateMachine* sm) noexcept
-    : BaseState{sm}, world{std::make_shared<World>(false)}
+    : BaseState{sm}, world{std::make_shared<World>(false)},
+        bird{std::make_shared<Bird>(Settings::VIRTUAL_WIDTH / 2 - Settings::BIRD_WIDTH / 2, Settings::VIRTUAL_HEIGHT / 2 - Settings::BIRD_HEIGHT / 2, 
+            Settings::BIRD_WIDTH, Settings::BIRD_HEIGHT)}
+
 {
 
 }
@@ -23,7 +26,7 @@ void TitleScreenState::handle_inputs(const sf::Event& event) noexcept
 {
     if (event.key.code == sf::Keyboard::Enter)
     {
-        state_machine->change_state("count_down", world);
+        state_machine->change_state("count_down", world, bird);
     }
 }
 

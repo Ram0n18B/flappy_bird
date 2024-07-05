@@ -10,6 +10,7 @@
 
 #pragma once
 
+#include <src/Bird.hpp>
 #include <src/World.hpp>
 #include <src/states/BaseState.hpp>
 
@@ -26,4 +27,5 @@ public:
 
 private:
     std::shared_ptr<World> world;
+    std::shared_ptr<Bird> bird;
 };

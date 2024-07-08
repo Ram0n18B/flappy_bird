@@ -5,22 +5,19 @@
     Author: Alejandro Mujica
     alejandro.j.mujic4@gmail.com
 
-    This file contains the declaration of the class PlayingBaseState.
+    This file contains the declaration of the class CountDownBaseState.
 */
 
 #pragma once
 
 #include <src/Bird.hpp>
 #include <src/World.hpp>
-#include <src/states/BaseState.hpp>
 #include <src/strategies/BaseStrategy.hpp>
 
-class PlayingState: public BaseState
+class NormalMode : public BaseStrategy
 {
 public:
-    PlayingState(StateMachine* sm) noexcept;
-
-    void enter(std::shared_ptr<World> _world = nullptr, std::shared_ptr<Bird> _bird = nullptr) noexcept override;
+    NormalMode(StateMachine* sm, std::shared_ptr<World> _world = nullptr, std::shared_ptr<Bird> _bird = nullptr) noexcept;
 
     void handle_inputs(const sf::Event& event) noexcept override;
 
@@ -31,6 +28,5 @@ public:
 private:
     std::shared_ptr<Bird> bird;
     std::shared_ptr<World> world;
-    std::shared_ptr<BaseStrategy> current_strategy{nullptr};
     int score{0};
 };

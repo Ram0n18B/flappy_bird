@@ -46,11 +46,11 @@ struct Settings
     static constexpr int MEDIUM_TEXT_SIZE{18};
     static constexpr int HUGE_TEXT_SIZE{56};
     static constexpr int FLAPPY_TEXT_SIZE{28};
-
     static std::unordered_map<std::string, sf::Texture> textures;
     static std::unordered_map<std::string, sf::SoundBuffer> sound_buffers;
     static std::unordered_map<std::string, sf::Sound> sounds;
     static std::unordered_map<std::string, sf::Font> fonts;
+    static int gameMode; //Variable para escojer el modo de juego (0 modo normal) (1 modo dificil) 
 
     static sf::Music music;
 

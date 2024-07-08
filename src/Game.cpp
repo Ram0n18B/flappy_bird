@@ -19,13 +19,13 @@ Game::Game()
     : render_window{sf::VideoMode{Settings::WINDOW_WIDTH, Settings::WINDOW_HEIGHT}, "Flappy Bird", sf::Style::Close},
       render_texture{},
       render_sprite{},
-      state_machine{
+      state_machine
+      {
         {"title", [](StateMachine* sm) { return std::make_shared<TitleScreenState>(sm); }},
         {"count_down", [](StateMachine* sm) { return std::make_shared<CountDownState>(sm); }},
         {"playing", [](StateMachine* sm) { return std::make_shared<PlayingState>(sm); }},
         {"pause", [](StateMachine* sm) { return std::make_shared<PauseState>(sm); }}
-}
-
+      }
 {
     render_texture.create(Settings::VIRTUAL_WIDTH, Settings::VIRTUAL_HEIGHT);
 

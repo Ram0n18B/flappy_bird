@@ -16,7 +16,7 @@ void NormalMode::handle_inputs(const sf::Event& event) noexcept
     {
         bird->jump();
     }
-    else if (event.key.code == sf::Keyboard::P) 
+    else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::P) 
     {
         state_machine->change_state("pause", world, bird);
     }

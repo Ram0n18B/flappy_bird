@@ -36,6 +36,10 @@ bool World::collides(const sf::FloatRect& rect) const noexcept
     {
         return true;
     }
+    else if (rect.left + rect.width >= Settings::VIRTUAL_WIDTH || rect.left < 0) 
+    {
+        return true;
+    }
     
     for (auto log_pair: logs)
     {

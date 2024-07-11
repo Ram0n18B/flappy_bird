@@ -12,7 +12,7 @@
 #include <src/Bird.hpp>
 
 Bird::Bird(float _x, float _y, float w, float h) noexcept
-    : x{_x}, y{_y}, width{w}, height{h}, vy{0.f}, sprite{Settings::textures["bird"]}, score{0}
+    : x{_x}, y{_y}, width{w}, height{h}, vy{0.f}, vx{0}, sprite{Settings::textures["bird"]}, score{0}
 {
     sprite.setPosition(x, y);
 }
@@ -22,6 +22,7 @@ void Bird::reset(float _x, float _y) noexcept
     x = _x;
     y = _y;
     vy = 0.f;
+    vx = 0.f;
     sprite.setPosition(x, y);
 }
 
@@ -36,6 +37,23 @@ void Bird::jump() noexcept
     {
         jumping = true;
     }
+}
+
+void Bird::movingRight() noexcept 
+{
+    vx = Settings::BIRD_SPEED_X;
+    isMovX = true;
+}
+
+void Bird::movingLeft() noexcept 
+{
+    vx = -Settings::BIRD_SPEED_X;
+    isMovX = true;
+}
+
+void Bird::stopMovingX() noexcept
+{
+    isMovX = false;
 }
 
 void Bird::addScore()
@@ -64,6 +82,12 @@ void Bird::update(float dt) noexcept
         jumping = false;
     }
 
+    if (!isMovX) 
+    {
+        vx = 0.f;
+    }
+
+    x += vx * dt;
     y += vy * dt;
     sprite.setPosition(x, y);
 }

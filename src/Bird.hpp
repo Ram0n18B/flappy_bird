@@ -26,6 +26,10 @@ public:
     sf::FloatRect get_collision_rect() const noexcept;
 
     void jump() noexcept;
+    void movingRight() noexcept;
+    void movingLeft() noexcept;
+    void stopMovingX() noexcept;
+
     void addScore();
     int getScore() const;
     void scoreReset();
@@ -40,8 +44,9 @@ private:
     float width;
     float height;
     float vy;
+    float vx;
     sf::Sprite sprite;
     bool jumping{false};
-
+    bool isMovX{false};
     int score;
 };

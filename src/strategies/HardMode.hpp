@@ -18,5 +18,5 @@ public:
 private:
     std::shared_ptr<Bird> bird;
     std::shared_ptr<World> world;
-    //int score{0};
+    int score{0};
 };

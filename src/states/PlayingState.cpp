@@ -13,6 +13,7 @@
 #include <src/states/StateMachine.hpp>
 #include <src/states/PlayingState.hpp>
 #include <src/strategies/NormalMode.hpp>
+#include <src/strategies/HardMode.hpp>
 
 PlayingState::PlayingState(StateMachine* sm) noexcept
     : BaseState{sm}
@@ -31,8 +32,7 @@ void PlayingState::enter(std::shared_ptr<World> _world, std::shared_ptr<Bird> _b
     }
     else if (current_strategy == nullptr && Settings::gameMode == 1) 
     {
-        //TODO
-        //current_strategy = std::make_shared<HardMode>(state_machine, world, bird);
+        current_strategy = std::make_shared<HardMode>(state_machine, world, bird);
     }
 }
 

@@ -6,20 +6,58 @@
 HardMode::HardMode(StateMachine* sm, std::shared_ptr<World> _world, std::shared_ptr<Bird> _bird) noexcept
     : BaseStrategy{sm}
 {
-    //TODO
+    world = _world;
+    bird = _bird;
 }
 
 void HardMode::handle_inputs(const sf::Event& event) noexcept
 {
-    //TODO
+    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+    {
+        bird->jump();
+    }
+    else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::P) 
+    {
+        state_machine->change_state("pause", world, bird);
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) 
+    {
+        bird->movingLeft();
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) 
+    {
+        bird->movingRight();
+    }
+    else if (event.type == sf::Event::KeyReleased && (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::Left)) 
+    {
+        bird->stopMovingX();
+    }
 }
 
 void HardMode::update(float dt) noexcept
 {
-    //TODO
+    bird->update(dt);
+    world->update(dt);
+
+    if (world->collides(bird->get_collision_rect()))
+    {
+        Settings::sounds["explosion"].play();
+        Settings::sounds["hurt"].play();
+        bird->scoreReset();
+        state_machine->change_state("count_down", world, bird);
+        return;
+    }
+
+    if (world->update_scored(bird->get_collision_rect()))
+    {
+        bird->addScore();
+        Settings::sounds["score"].play();
+    }
 }
 
 void HardMode::render(sf::RenderTarget& target) const noexcept
 {
-    //TODO
+    world->render(target);
+    bird->render(target);
+    render_text(target, 20, 10, "Score: " + std::to_string(bird->getScore()), Settings::FLAPPY_TEXT_SIZE, "flappy", sf::Color::White);
 }

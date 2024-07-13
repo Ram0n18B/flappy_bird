@@ -14,6 +14,7 @@
 Bird::Bird(float _x, float _y, float w, float h) noexcept
     : x{_x}, y{_y}, width{w}, height{h}, vy{0.f}, vx{0}, sprite{Settings::textures["bird"]}, score{0}
 {
+
     sprite.setPosition(x, y);
 }
 
@@ -71,7 +72,24 @@ void Bird::scoreReset()
     score = 0;
 }
 
-void Bird::update(float dt) noexcept
+bool Bird::isIntangible() const noexcept
+{
+    return intangible;
+}
+
+void Bird::setIntangible() noexcept
+{
+    if (intangible) 
+    {
+        intangible = false; 
+    }
+    else 
+    {
+        intangible = true;
+    }
+}
+
+void Bird::moving(float dt) noexcept
 {
     vy += Settings::GRAVITY * dt;
 
@@ -90,6 +108,11 @@ void Bird::update(float dt) noexcept
     x += vx * dt;
     y += vy * dt;
     sprite.setPosition(x, y);
+}
+
+void Bird::update(float dt) noexcept
+{
+    moving(dt);
 }
 
 void Bird::render(sf::RenderTarget& target) const noexcept

@@ -26,9 +26,13 @@ public:
     sf::FloatRect get_collision_rect() const noexcept;
 
     void jump() noexcept;
+    void moving(float dt) noexcept;
     void movingRight() noexcept;
     void movingLeft() noexcept;
     void stopMovingX() noexcept;
+
+    bool isIntangible() const noexcept;
+    void setIntangible() noexcept;
 
     void addScore();
     int getScore() const;
@@ -45,6 +49,7 @@ private:
     float height;
     float vy;
     float vx;
+    bool intangible{false}; // true intangible, false no intangible
     sf::Sprite sprite;
     bool jumping{false};
     bool isMovX{false};

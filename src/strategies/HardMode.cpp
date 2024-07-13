@@ -46,7 +46,7 @@ void HardMode::update(float dt) noexcept
         bird->scoreReset();
         state_machine->change_state("count_down", world, bird);
         return;
-    }
+    }   
 
     if (world->update_scored(bird->get_collision_rect()))
     {

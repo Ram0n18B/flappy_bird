@@ -51,6 +51,13 @@ void Settings::load_textures()
 
     Settings::textures["bird"] = texture;
 
+    if (!texture.loadFromFile(Settings::TEXTURES_PATH / "bird_ghost.png"))
+    {
+        throw std::runtime_error{"Error loading texture assets/graphics/bird_ghost.png"};
+    }
+
+    Settings::textures["bird_ghost"] = texture;
+
     if (!texture.loadFromFile(Settings::TEXTURES_PATH / "background.png"))
     {
         throw std::runtime_error{"Error loading texture assets/graphics/background.png"};
@@ -71,6 +78,13 @@ void Settings::load_textures()
     }
 
     Settings::textures["Log"] = texture;
+
+    if (!texture.loadFromFile(Settings::TEXTURES_PATH / "berrie.png"))
+    {
+        throw std::runtime_error{"Error loading texture assets/graphics/berrie.png"};
+    }
+
+    Settings::textures["berrie"] = texture;
 }
 
 void Settings::load_sounds()

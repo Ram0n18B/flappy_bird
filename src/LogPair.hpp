@@ -13,15 +13,18 @@
 #include <memory>
 #include <src/Bird.hpp>
 #include <src/StaticLog.hpp>
+#include <src/MovingLog.hpp>
 
 class LogPair
 {
 public:
-    LogPair(float _x, float _y) noexcept;
+    LogPair(float _x, float _y, std::shared_ptr<Log> _top, std::shared_ptr<Log> _bottom) noexcept;
 
     bool collides(const sf::FloatRect& rect) const noexcept;
 
-    void update(float dt) noexcept;
+    void update(float dt) noexcept;    
+
+    void move_limiter() noexcept;
 
     void render(sf::RenderTarget& target) const noexcept;
 
@@ -29,13 +32,15 @@ public:
 
     bool update_scored(const sf::FloatRect& rect) noexcept;
 
-    void reset(float _x, float _y) noexcept;
+    void reset(float _x, float _y, std::shared_ptr<Log> _top, std::shared_ptr<Log> _bottom) noexcept;
+
+    bool is_gap_closed() const noexcept;
 
 private:
     float x;
     float y;
-    std::shared_ptr<Log> top = nullptr;
-    std::shared_ptr<Log> bottom = nullptr;
+    std::shared_ptr<Log> top;
+    std::shared_ptr<Log> bottom;
 
     bool scored{false};
 };

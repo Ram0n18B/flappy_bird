@@ -56,5 +56,7 @@ void NormalMode::spawn_logs(float& logs_spawn_timer, std::mt19937& rng,float& la
     std::uniform_int_distribution<int> dist{-20, 20};
     float y = std::max(-Settings::LOG_HEIGHT + 10, std::min(last_log_y + dist(rng), Settings::VIRTUAL_HEIGHT + 90 - Settings::LOG_HEIGHT));
     last_log_y = y;
-    logs.push_back(log_factory.create(Settings::VIRTUAL_WIDTH, y));
+    std::shared_ptr<Log> _top = std::make_shared<StaticLog>(Settings::VIRTUAL_WIDTH, y + Settings::LOG_HEIGHT, true);
+    std::shared_ptr<Log> _bottom = std::make_shared<StaticLog>(Settings::VIRTUAL_WIDTH, y + Settings::LOGS_GAP + Settings::LOG_HEIGHT, false);
+    logs.push_back(log_factory.create(Settings::VIRTUAL_WIDTH, y, _top, _bottom));
 }

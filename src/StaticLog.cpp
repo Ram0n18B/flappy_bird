@@ -15,3 +15,15 @@ void StaticLog::update(float _x, float _y) noexcept
 
     sprite.setPosition(x, y);
 }
+
+float StaticLog::vertical_speed() const noexcept
+{
+    return 0;
+}
+
+void StaticLog::change_direction() noexcept{}
+
+bool StaticLog::is_at_initial_y() const noexcept
+{
+    return true;
+}

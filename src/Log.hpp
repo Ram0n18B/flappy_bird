@@ -23,10 +23,15 @@ public:
 
     void render(sf::RenderTarget& target) const noexcept;
 
+    virtual float vertical_speed() const noexcept = 0;
+
+    virtual void change_direction() noexcept {}
+
+    virtual bool is_at_initial_y() const noexcept = 0;
+
 protected:
-    float x = 0;
-    float y = 0;
-    float vertical_speed = 0;
+    float x;
+    float y;
     bool inverted = false;
     sf::Sprite sprite;
 };

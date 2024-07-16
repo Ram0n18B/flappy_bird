@@ -14,10 +14,10 @@
 /*top{x, y + Settings::LOG_HEIGHT, true},
 bottom{x, y + Settings::LOGS_GAP + Settings::LOG_HEIGHT, false}*/
 
-LogPair::LogPair(float _x, float _y) noexcept
+LogPair::LogPair(float _x, float _y, std::shared_ptr<Log> _top, std::shared_ptr<Log> _bottom) noexcept
     : x{_x}, y{_y},
-    top{std::make_shared<StaticLog>(x, y + Settings::LOG_HEIGHT, true)},
-    bottom{std::make_shared<StaticLog>(x, y + Settings::LOGS_GAP + Settings::LOG_HEIGHT, false)}
+    top{_top},
+    bottom{_bottom}
 {}
 
 bool LogPair::collides(const sf::FloatRect& rect) const noexcept
@@ -28,9 +28,20 @@ bool LogPair::collides(const sf::FloatRect& rect) const noexcept
 void LogPair::update(float dt) noexcept
 {
     x += -Settings::MAIN_SCROLL_SPEED * dt;
-    
-    top->update(x, 0);
-    bottom->update(x, 0);
+    move_limiter();
+    const float top_dy = top->vertical_speed() * dt;
+    const float bottom_dy = bottom->vertical_speed() * dt;
+    top->update(x, top_dy);
+    bottom->update(x, bottom_dy);
+}
+
+void LogPair::move_limiter() noexcept
+{
+    bool IsGapClosed = is_gap_closed();
+    if(IsGapClosed || top->is_at_initial_y())
+        top->change_direction();
+    if(IsGapClosed || bottom->is_at_initial_y())
+        bottom->change_direction();
 }
 
 void LogPair::render(sf::RenderTarget& target) const noexcept
@@ -60,9 +71,16 @@ bool LogPair::update_scored(const sf::FloatRect& rect) noexcept
     return false;
 }
 
-void LogPair::reset(float _x, float _y) noexcept
+void LogPair::reset(float _x, float _y, std::shared_ptr<Log> _top, std::shared_ptr<Log> _bottom) noexcept
 {
     x = _x;
     y = _y;
+    top = _top;
+    bottom = _bottom;
     scored = false;
+}
+
+bool LogPair::is_gap_closed() const noexcept
+{
+    return top->get_collision_rect().intersects(bottom->get_collision_rect());
 }

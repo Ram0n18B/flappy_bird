@@ -18,6 +18,8 @@
 
 #include <src/Factory.hpp>
 #include <src/LogPair.hpp>
+#include <src/strategies/NormalMode.hpp>
+#include <src/strategies/HardMode.hpp>
 
 class World
 {
@@ -37,7 +39,12 @@ public:
     void update(float dt) noexcept;
 
     void render(sf::RenderTarget& target) const noexcept;
+
+    void set_game_mode_to(std::shared_ptr<BaseStrategy> _gm) noexcept;
+    
 private:
+    std::shared_ptr<BaseStrategy> game_mode = nullptr;
+
     bool generate_logs;
 
     sf::Sprite background;

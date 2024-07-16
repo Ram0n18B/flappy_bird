@@ -10,8 +10,9 @@
 
 #pragma once
 
+#include <memory>
 #include <src/Bird.hpp>
-#include <src/Log.hpp>
+#include <src/StaticLog.hpp>
 
 class LogPair
 {
@@ -33,8 +34,8 @@ public:
 private:
     float x;
     float y;
-    Log top;
-    Log bottom;
+    std::shared_ptr<Log> top = nullptr;
+    std::shared_ptr<Log> bottom = nullptr;
 
     bool scored{false};
 };
